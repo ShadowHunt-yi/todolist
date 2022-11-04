@@ -1,13 +1,13 @@
 <template>
   <div id="root">
-  <div class="todo-container">
-    <div class="todo-wrap">
-      <Top :receive="receive"/>
-      <List :todos="todos" :changeCheck="changeCheck" :moveTodo="moveTodo"/>
-      <Drop :todos="todos" :checkAll="checkAll" :clearAll="clearAll"/>
+    <div class="todo-container">
+      <div class="todo-wrap">
+        <Top :receive="receive" />
+        <List :todos="todos" :changeCheck="changeCheck" :moveTodo="moveTodo" />
+        <Drop :todos="todos" :checkAll="checkAll" :clearAll="clearAll" />
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -23,45 +23,51 @@ export default {
     Drop
   },
   data() {
-        return {
-            todos:[
-          {id:'001',title:"eat",done:true}
-        ]
-        }
+    return {
+      todos:JSON.parse(localStorage.getItem('todos'))||[]
+    }
+  },
+  watch: {
+    todos:{
+      deep:true,
+      handler(value) {
+      localStorage.setItem('todos',JSON.stringify(value))
+    }
+    }
+  },
+  methods: {
+    //收到一个对象并加入数组
+    receive(x) {
+      //将top传来的对象加入todos首项
+      this.todos.unshift(x)
     },
-    methods: {
-      //收到一个对象并加入数组
-      receive(x){
-        //将top传来的对象加入todos首项
-        this.todos.unshift(x)
-      },
-      //勾选事件
-      changeCheck(id){
-        this.todos.forEach((todo)=>{
-          if(todo.id==id)todo.done=!todo.done
-        })
-      },
-      //移除todo
-      moveTodo(id){
-        this.todos=this.todos.filter(
-          todo =>todo.id!== id
-        )
-      },
-      //全选或全不选
-      checkAll(done){
-        this.todos.forEach((todo)=>{
-          todo.done=done;
-        })
-      },
-      //清除全部选择
-      clearAll(done){
-        //过滤
-        this.todos=this.todos.filter(
-          todo =>!todo.done
-        )
-      }
-      
+    //勾选事件
+    changeCheck(id) {
+      this.todos.forEach((todo) => {
+        if (todo.id == id) todo.done = !todo.done
+      })
     },
+    //移除todo
+    moveTodo(id) {
+      this.todos = this.todos.filter(
+        todo => todo.id !== id
+      )
+    },
+    //全选或全不选
+    checkAll(done) {
+      this.todos.forEach((todo) => {
+        todo.done = done;
+      })
+    },
+    //清除全部选择
+    clearAll(done) {
+      //过滤
+      this.todos = this.todos.filter(
+        todo => !todo.done
+      )
+    }
+
+  },
 }
 </script>
 
@@ -103,6 +109,7 @@ body {
   width: 600px;
   margin: 0 auto;
 }
+
 .todo-container .todo-wrap {
   padding: 10px;
   border: 1px solid #ddd;
@@ -110,7 +117,4 @@ body {
 }
 
 /*header*/
-
-
-
 </style>
