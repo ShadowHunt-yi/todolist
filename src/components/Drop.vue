@@ -15,9 +15,7 @@
 export default {
     name: 'Drop',
     props: [
-        'todos',
-        'checkAll',
-        'clearAll'
+        'todos'
     ],
     computed: {
         //计算有几个已完成
@@ -28,11 +26,11 @@ export default {
     methods: {
         //全选或全不选
         checkout(e) {
-            this.checkAll(e.target.checked)
+            this.$emit('checkAll',e.target.checked)
         },
         //清除全部选择
         clearTodo(todos){
-            this.clearAll(todos)
+            this.$emit('clearAll',todos)
         }
 
     }

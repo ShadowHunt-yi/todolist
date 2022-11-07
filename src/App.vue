@@ -2,9 +2,9 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <Top :receive="receive" />
+        <Top @receive="receive" />
         <List :todos="todos" :changeCheck="changeCheck" :moveTodo="moveTodo" />
-        <Drop :todos="todos" :checkAll="checkAll" :clearAll="clearAll" />
+        <Drop :todos="todos" @checkAll="checkAll" @clearAll="clearAll" />
       </div>
     </div>
   </div>
@@ -24,15 +24,15 @@ export default {
   },
   data() {
     return {
-      todos:JSON.parse(localStorage.getItem('todos'))||[]
+      todos: JSON.parse(localStorage.getItem('todos')) || []
     }
   },
   watch: {
-    todos:{
-      deep:true,
+    todos: {
+      deep: true,
       handler(value) {
-      localStorage.setItem('todos',JSON.stringify(value))
-    }
+        localStorage.setItem('todos', JSON.stringify(value))
+      }
     }
   },
   methods: {
