@@ -5,4 +5,9 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+  beforeCreate(){
+    Vue.prototype.$bus=this
+  }
+})
+.$mount('#app')
+

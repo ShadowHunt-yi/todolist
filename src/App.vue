@@ -68,6 +68,15 @@ export default {
     }
 
   },
+  mounted(){
+    this.$bus.$on('changeCheck',this.changeCheck)
+    this.$bus.$on('moveTodo',this.moveTodol)
+  },
+  beforeDestroy(){
+    this.$bus.$off('changeCheck')
+    this.$bus.$off('moveTodo')
+
+  }
 }
 </script>
 

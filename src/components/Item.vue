@@ -20,12 +20,14 @@ export default {
     methods: {
         //改变选择状态
         change(id){
-            this.changeCheck(id);
+            // this.changeCheck(id);
+            this.$bus.$emit('changeCheck',id)
         },
         //删除一个todo
         deletetodo(id){
             if(confirm('确定删除？')){
-                this.moveTodo(id)
+                // this.moveTodo(id)
+                this.$bus.$emit('moveTodo',id)
             }
         },
     },
