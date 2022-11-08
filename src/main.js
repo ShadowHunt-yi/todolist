@@ -6,6 +6,7 @@ Vue.config.productionTip = false
 new Vue({
   render: h => h(App),
   beforeCreate(){
+    //将vm设为事件总线
     Vue.prototype.$bus=this
   }
 })

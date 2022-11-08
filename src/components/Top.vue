@@ -5,6 +5,7 @@
 </template>
 
 <script>
+//引入一个随机id生成
 import  {nanoid} from 'nanoid'
 export default {
     name: 'Top',
