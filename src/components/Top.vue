@@ -19,7 +19,7 @@ export default {
             //静止为空输入
             if(this.title==''){return alert('请输入有效事件')}
             //将输入的值包装成todos对象
-           const a = {id:nanoid(),title:e.target.value,done:false};
+           const a = {id:nanoid(),title:e.target.value,done:false,isEdit:false};
            //将对象传回app组件进行处理 
            this.$emit('receive',a);
             //清空输入

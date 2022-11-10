@@ -44,6 +44,7 @@ export default {
     //勾选事件
     changeCheck(id) {
       this.todos.forEach((todo) => {
+        //将要勾选的id与数据里的进行比对，找到正确的id进行修改
         if (todo.id == id) todo.done = !todo.done
       })
     },
@@ -65,16 +66,24 @@ export default {
       this.todos = this.todos.filter(
         todo => !todo.done
       )
+    },
+    //更新每项todo的title
+    updateTodo(id,title){
+      this.todos.forEach((todo) => {
+        if (todo.id == id) todo.title = title
+      })
     }
 
   },
   mounted(){
     this.$bus.$on('changeCheck',this.changeCheck)
-    this.$bus.$on('moveTodo',this.moveTodol)
+    this.$bus.$on('updateTodo',this.updateTodo)
+    this.$bus.$on('moveTodo',this.moveTodo)
   },
   beforeDestroy(){
     this.$bus.$off('changeCheck')
     this.$bus.$off('moveTodo')
+    this.$bus.$off('updateTodo')
 
   }
 }
@@ -87,7 +96,6 @@ body {
 }
 
 .btn {
-  display: inline-block;
   padding: 4px 12px;
   margin-bottom: 0;
   font-size: 14px;
@@ -103,6 +111,12 @@ body {
   color: #fff;
   background-color: #da4f49;
   border: 1px solid #bd362f;
+}
+.btn-Edit {
+  color: rgb(255, 255, 255);
+  background-color: #49b8da;
+  border: 1px solid #2f42bd;
+  margin-right: 5px;
 }
 
 .btn-danger:hover {
