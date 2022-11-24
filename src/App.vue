@@ -29,8 +29,10 @@ export default {
   },
   watch: {
     todos: {
+      //深度检测
       deep: true,
       handler(value) {
+        //将todos以json数据形式存出本地浏览器数据
         localStorage.setItem('todos', JSON.stringify(value))
       }
     }
@@ -45,17 +47,19 @@ export default {
     changeCheck(id) {
       this.todos.forEach((todo) => {
         //将要勾选的id与数据里的进行比对，找到正确的id进行修改
-        if (todo.id == id) todo.done = !todo.done
+        if (todo.id === id) todo.done = !todo.done
       })
     },
     //移除todo
     moveTodo(id) {
+      //通过filter进行筛选来实现移除
       this.todos = this.todos.filter(
         todo => todo.id !== id
       )
     },
     //全选或全不选
     checkAll(done) {
+      //遍历全部todos改变选择状态
       this.todos.forEach((todo) => {
         todo.done = done;
       })
@@ -70,17 +74,20 @@ export default {
     //更新每项todo的title
     updateTodo(id,title){
       this.todos.forEach((todo) => {
-        if (todo.id == id) todo.title = title
+        if (todo.id === id) todo.title = title
       })
     }
 
   },
-  mounted(){
+  mounted(){ 
+    //在vm挂载时开启自定义事件
     this.$bus.$on('changeCheck',this.changeCheck)
     this.$bus.$on('updateTodo',this.updateTodo)
     this.$bus.$on('moveTodo',this.moveTodo)
+    console.log(this);
   },
   beforeDestroy(){
+    //在销毁vm时关闭全部的自定义事件
     this.$bus.$off('changeCheck')
     this.$bus.$off('moveTodo')
     this.$bus.$off('updateTodo')

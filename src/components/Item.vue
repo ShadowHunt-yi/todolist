@@ -7,7 +7,9 @@
             v-show="todo.isEdit" 
             :value="todo.title"
             @blur="ItemBlur(todo,$event)"
-            ref="inputTitle" />
+            ref="inputTitle" 
+            @keyup.enter="alter(todo,$event)"
+            />
         </label>
         <button class="btn btn-danger" @click="deletetodo(todo.id)">删除</button>
         <button v-show="!todo.isEdit" class="btn btn-Edit" @click="EditTodo(todo)">编辑</button>
@@ -45,13 +47,21 @@ export default {
                 //当点击编辑后将焦点转到输入框
                 this.$refs.inputTitle.focus()
             })
-            
         },
         //当输入框失去焦点时会调用
         ItemBlur(todo,e) {
             this.todo.isEdit = false;
             //判断修改数据是否为空
-            if(e.target.value!=''){
+            if(e.target.value!=''){ 
+                this.$bus.$emit('updateTodo',todo.id, e.target.value)
+            }else{
+                alert("不能修改为空")
+            }
+        },
+        alter(todo,e){
+            this.todo.isEdit = false;
+            //判断修改数据是否为空
+            if(e.target.value!=''){ 
                 this.$bus.$emit('updateTodo',todo.id, e.target.value)
             }else{
                 alert("不能修改为空")
